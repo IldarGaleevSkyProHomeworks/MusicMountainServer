@@ -1,7 +1,12 @@
+import os.path
+import config
+import logging
+
 import peewee
 import config
 
 db = peewee.SqliteDatabase(config.DATABASE_PATH)
+logger = logging.getLogger('Database Context')
 
 
 class BaseModel(peewee.Model):
@@ -93,3 +98,22 @@ class TrackPlaylistAssign(BaseModel):
 
 
 PlaylistsThroughDeferred.set_model(TrackPlaylistAssign)
+
+if not os.path.exists(config.DATABASE_PATH):
+    try:
+        logger.info("Database file init")
+
+        os.mkdir(os.path.dirname(config.DATABASE_PATH))
+        db.create_tables([
+            Track,
+            Artist,
+            Playlist,
+            TrackTag,
+            Album,
+            TrackAlbumsAssign,
+            TrackPlaylistAssign,
+            TrackTagAssign
+        ])
+    except Exception as ex:
+        logger.fatal(f"Database init error: {ex}")
+        raise ex
