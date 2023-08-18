@@ -14,7 +14,7 @@ async def index(request):
     return web.json_response({"state": "ok"})
 
 
-@routes.get(r'/track/{track_id:\d+}')
+@routes.get(r'/tracks/{track_id:\d+}')
 async def get_track_by_id(request):
     track_id = request.match_info['track_id']
 
