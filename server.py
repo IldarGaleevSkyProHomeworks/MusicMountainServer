@@ -44,6 +44,9 @@ async def get_track_file_by_id(request):
 
     with db.db.atomic():
         track = db.Track.get_or_none(db.Track.id == int(track_id))
+        if not track:
+            raise web.HTTPNotFound()
+
         file_name = os.path.join(config.DATA_FILE_PATH, track.file_name)
         if os.path.exists(file_name):
             base_name = os.path.basename(file_name)
