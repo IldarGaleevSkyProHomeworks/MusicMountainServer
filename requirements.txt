@@ -1,3 +1,4 @@
 peewee==3.16.3
 aiohttp==3.8.5
 progressbar2>=4.2.0
+eyed3>=0.9.7
