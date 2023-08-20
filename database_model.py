@@ -99,11 +99,14 @@ class TrackPlaylistAssign(BaseModel):
 
 PlaylistsThroughDeferred.set_model(TrackPlaylistAssign)
 
+dir_name = os.path.dirname(config.DATABASE_PATH)
+if not os.path.exists(dir_name):
+    os.mkdir(dir_name)
+
 if not os.path.exists(config.DATABASE_PATH):
     try:
         logger.info("Database file init")
 
-        os.mkdir(os.path.dirname(config.DATABASE_PATH))
         db.create_tables([
             Track,
             Artist,
